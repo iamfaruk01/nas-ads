@@ -1,127 +1,192 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
-import MagneticButton from "./MagneticButton";
+import { motion, useScroll, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Showcase", href: "#showcase" },
+  { label: "Services", href: "#showcase" },
   { label: "Results", href: "#metrics" },
-  { label: "Contact", href: "#contact" },
+  { label: "Company", href: "#" },
+  { label: "Blog", href: "#" },
+  { label: "Contacts", href: "#contact" },
 ];
+
+/* Underline that slides in from left on hover */
+function NavLink({ label, href }: { label: string; href: string }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <a
+      href={href}
+      className="relative text-white/75 hover:text-white text-[15px] font-normal tracking-[-0.01em] transition-colors duration-300 py-1"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {label}
+      <motion.span
+        className="absolute bottom-0 left-0 h-px bg-white w-full origin-left"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: hovered ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: [0.32, 0, 0.67, 0] }}
+      />
+    </a>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
   const { scrollY } = useScroll();
-  const navY = useTransform(scrollY, [0, 100], [0, 0]);
 
   useEffect(() => {
-    const unsub = scrollY.on("change", (v) => setScrolled(v > 50));
+    const unsub = scrollY.on("change", (v) => setScrolled(v > 60));
     return unsub;
   }, [scrollY]);
 
   return (
-    <motion.header
-      style={{ y: navY }}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+    <header
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        transition: "background 0.5s ease, border-color 0.5s ease",
+        background: scrolled ? "rgba(5,5,5,0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(18px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(18px)" : "none",
+        borderBottom: scrolled
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid transparent",
+      }}
     >
-      <div
-        className="mx-4 mt-4 rounded-2xl transition-all duration-500"
-        style={{
-          background: scrolled
-            ? "rgba(5,5,5,0.85)"
-            : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          border: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 4px 30px rgba(0,0,0,0.4)" : "none",
-        }}
-      >
-        <div className="container mx-auto px-5 py-3.5 flex items-center justify-between">
-          {/* Logo */}
-          <motion.a
-            href="#hero"
-            className="flex items-center gap-2.5 group"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      <div className="mx-auto max-w-[1440px] px-8 md:px-12 lg:px-16 h-[68px] flex items-center justify-between">
+
+        {/* ── Logo wordmark ── */}
+        <a
+          href="#"
+          aria-label="Home"
+          className="group flex items-center gap-0 select-none"
+        >
+          {/* Animated logomark icon */}
+          <motion.span
+            className="inline-block mr-1 text-white"
+            whileHover={{ rotate: -10, scale: 1.15 }}
+            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+            aria-hidden="true"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-violet-900/50">
-              <span className="text-white text-xs font-extrabold font-display">N</span>
-            </div>
-            <span className="text-white font-semibold text-sm tracking-wide font-display">
-              Nasiur<span className="text-violet-400">Media</span>
-            </span>
-          </motion.a>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-white/50 hover:text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-white/5 transition-all duration-300"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
-            <div className="hidden md:block">
-              <MagneticButton
-                id="nav-cta"
-                variant="primary"
-                className="text-sm py-2.5 px-6"
-                href="#contact"
-              >
-                Book a Call
-              </MagneticButton>
-            </div>
-
-            {/* Mobile menu toggle */}
-            <button
-              className="md:hidden text-white/60 hover:text-white transition-colors"
-              onClick={() => setMenuOpen((v) => !v)}
-              aria-label="Toggle menu"
-              aria-expanded={menuOpen}
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
+              <path
+                d="M11 2C6.029 2 2 6.029 2 11s4.029 9 9 9 9-4.029 9-9"
+                stroke="white"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M14.5 2.5C14.5 2.5 20 5 20 11"
+                stroke="white"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                opacity="0.4"
+              />
+            </svg>
+          </motion.span>
 
-        {/* Mobile menu */}
+          <span
+            className="text-white text-[17px] font-semibold tracking-[-0.04em] leading-none"
+            style={{ fontFamily: "var(--font-syne), var(--font-inter), sans-serif" }}
+          >
+            nasiur
+          </span>
+        </a>
+
+        {/* ── Desktop nav links ── */}
+        <nav
+          className="hidden md:flex items-center gap-8"
+          aria-label="Main navigation"
+        >
+          {navLinks.map((link) => (
+            <NavLink key={link.href + link.label} {...link} />
+          ))}
+        </nav>
+
+        {/* ── Mobile hamburger ── */}
+        <button
+          className="md:hidden flex flex-col items-end gap-[5px] group"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+        >
+          <motion.span
+            className="block h-[1.5px] bg-white rounded-full"
+            animate={{
+              width: menuOpen ? 24 : 24,
+              rotate: menuOpen ? 45 : 0,
+              y: menuOpen ? 6.5 : 0,
+            }}
+            transition={{ duration: 0.25, ease: [0.32, 0, 0.67, 0] }}
+            style={{ width: 24 }}
+          />
+          <motion.span
+            className="block h-[1.5px] bg-white rounded-full"
+            animate={{
+              width: menuOpen ? 0 : 16,
+              opacity: menuOpen ? 0 : 1,
+            }}
+            transition={{ duration: 0.2 }}
+            style={{ width: 16 }}
+          />
+          <motion.span
+            className="block h-[1.5px] bg-white rounded-full"
+            animate={{
+              width: menuOpen ? 24 : 20,
+              rotate: menuOpen ? -45 : 0,
+              y: menuOpen ? -6.5 : 0,
+            }}
+            transition={{ duration: 0.25, ease: [0.32, 0, 0.67, 0] }}
+            style={{ width: 20 }}
+          />
+        </button>
+      </div>
+
+      {/* ── Mobile full-screen menu ── */}
+      <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-white/5 px-5 py-4 flex flex-col gap-2"
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3, ease: [0.32, 0, 0.67, 0] }}
+            className="md:hidden absolute top-full left-0 right-0"
+            style={{
+              background: "rgba(5,5,5,0.97)",
+              backdropFilter: "blur(24px)",
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+            }}
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-white/60 hover:text-white py-2 text-sm font-medium transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-            <MagneticButton
-              id="nav-mobile-cta"
-              variant="primary"
-              className="mt-2 w-full justify-center text-sm py-3"
-              href="#contact"
-            >
-              Book a Call
-            </MagneticButton>
+            <nav className="flex flex-col px-8 py-6 gap-1" aria-label="Mobile navigation">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href + link.label}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-white/70 hover:text-white text-2xl font-semibold tracking-tight py-3 border-b border-white/5 last:border-0 transition-colors duration-200"
+                  style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.3 }}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </nav>
           </motion.div>
         )}
-      </div>
-    </motion.header>
+      </AnimatePresence>
+    </header>
   );
 }
