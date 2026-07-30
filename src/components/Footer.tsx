@@ -79,7 +79,7 @@ export default function Footer() {
               <MagneticButton
                 id="footer-cta-email"
                 variant="secondary"
-                href="mailto:hello@nasiurmedia.com"
+                href="mailto:nasirmarinkhan@gmail.com"
               >
                 Or Send an Email
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
