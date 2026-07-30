@@ -1,7 +1,17 @@
-export default function Home() {
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import AdShowcase from "@/components/AdShowcase";
+import MetricsSection from "@/components/MetricsSection";
+import Footer from "@/components/Footer";
+
+export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-4xl font-bold">hi</h1>
+    <main className="noise relative">
+      <Navbar />
+      <HeroSection />
+      <AdShowcase />
+      <MetricsSection />
+      <Footer />
     </main>
   );
 }
