@@ -5,22 +5,26 @@ import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import FloatingOrbs from "./FloatingOrbs";
 import MagneticButton from "./MagneticButton";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import {
+  IPhoneFrame,
+  DesktopFrame,
+  InstagramAdContent,
+  FacebookAdContent,
+} from "./DeviceMockups";
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as [number, number, number, number];
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 32 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      delay: i * 0.12,
-      duration: 0.8,
-      ease: EASE,
-    },
+    transition: { delay: i * 0.14, duration: 0.9, ease: EASE },
   }),
 };
+
+const FLOAT_EASE = "easeInOut" as const;
 
 export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,7 +34,7 @@ export default function HeroSection() {
     <section
       ref={ref}
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: "#050505" }}
     >
       {/* Background radial gradient */}
@@ -57,99 +61,189 @@ export default function HeroSection() {
         aria-hidden="true"
       />
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center max-w-5xl pt-24 pb-20">
-        {/* Eyebrow badge */}
-        <motion.div
-          custom={0}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeUp}
-          className="inline-flex items-center gap-2 mb-8"
-        >
-          <span className="glass px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase text-white/60 flex items-center gap-2">
-            <Zap className="w-3 h-3 text-violet-400" aria-hidden="true" />
-            Meta Ads Specialist
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Available for New Clients
-          </span>
-        </motion.div>
+      {/* 3-column layout */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12 pt-28 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] items-center gap-8 lg:gap-6">
 
-        {/* Main headline */}
-        <motion.h1
-          custom={1}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeUp}
-          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-[1.03] tracking-[-0.04em] text-white mb-6"
-        >
-          Scaling{" "}
-          <span className="relative inline-block">
-            <span className="text-gradient-brand">E-commerce</span>
-          </span>{" "}
-          Brands
-          <br />
-          with{" "}
-          <span className="text-gradient-warm">Data-Driven</span>
-          <br />
-          Meta Ads.
-        </motion.h1>
-
-        {/* Sub-headline */}
-        <motion.p
-          custom={2}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeUp}
-          className="text-white/50 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto mb-12 font-inter"
-        >
-          I architect high-performance paid social funnels on Facebook & Instagram
-          that turn cold audiences into loyal customers — with measurable,
-          repeatable ROAS.
-        </motion.p>
-
-        {/* CTA group */}
-        <motion.div
-          custom={3}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeUp}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <MagneticButton
-            id="hero-cta-primary"
-            variant="primary"
-            className="text-lg py-5 px-10 shadow-2xl shadow-violet-900/40"
-            href="#contact"
-          >
-            Scale Your Brand
-            <ArrowRight className="w-5 h-5" aria-hidden="true" />
-          </MagneticButton>
-
-          <MagneticButton
-            id="hero-cta-secondary"
-            variant="secondary"
-            href="#showcase"
-          >
-            View My Work
-          </MagneticButton>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          custom={5}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeUp}
-          className="mt-20 flex flex-col items-center gap-2"
-        >
-          <span className="text-white/20 text-xs tracking-widest uppercase">Scroll</span>
+          {/* ── LEFT: iPhone / Instagram ad ── */}
           <motion.div
-            className="w-px h-12 bg-gradient-to-b from-violet-500/50 to-transparent"
-            animate={{ scaleY: [0, 1, 0], originY: 0 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </motion.div>
+            className="hidden lg:flex justify-end pr-4"
+            initial={{ opacity: 0, x: -120 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1.0, delay: 0.4, ease: EASE }}
+          >
+            <motion.div
+              animate={{ y: [0, -18, -6, -20, 0], rotate: [0, 1, -0.5, 1.2, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: FLOAT_EASE }}
+              style={{
+                filter:
+                  "drop-shadow(0 30px 60px rgba(124,58,237,0.4)) drop-shadow(0 60px 120px rgba(59,130,246,0.15))",
+              }}
+            >
+              <IPhoneFrame scale={260 / 220}>
+                <InstagramAdContent />
+              </IPhoneFrame>
+            </motion.div>
+          </motion.div>
+
+          {/* ── CENTER: Text content ── */}
+          <div className="flex flex-col items-center text-center min-w-0 lg:min-w-[340px] xl:min-w-[420px]">
+            {/* Bullet dot */}
+            <motion.div
+              custom={0}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={fadeUp}
+              className="flex justify-center mb-8"
+            >
+              <span className="w-2 h-2 rounded-full bg-white/40 inline-block" aria-hidden="true" />
+            </motion.div>
+
+            {/* Main headline — 2 lines */}
+            <motion.h1
+              custom={1}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={fadeUp}
+              className="font-display font-black leading-[1.05] tracking-[-0.03em] text-white mb-8"
+              style={{
+                fontSize: "clamp(2.2rem, 5vw, 4.5rem)",
+                fontFamily: "var(--font-syne), sans-serif",
+              }}
+            >
+              <span className="block">
+                Scaling{" "}
+                <span className="text-gradient-brand">E-commerce</span>
+              </span>
+              <span className="block">
+                with{" "}
+                <span className="text-gradient-warm">Meta Ads.</span>
+              </span>
+            </motion.h1>
+
+            {/* Sub-headline — exactly 2 lines */}
+            <motion.p
+              custom={2}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={fadeUp}
+              className="text-white/45 mx-auto text-center"
+              style={{
+                fontSize: "clamp(0.95rem, 1.4vw, 1.1rem)",
+                maxWidth: "580px",
+                lineHeight: 1.6,
+                fontFamily: "var(--font-inter), sans-serif",
+                fontWeight: 400,
+              }}
+            >
+              High-performance Meta Ads that turn cold audiences
+              <br />
+              into loyal customers — with repeatable ROAS.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              custom={3}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={fadeUp}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+            >
+              <MagneticButton
+                id="hero-cta-primary"
+                variant="primary"
+                className="text-base py-4 px-9 shadow-2xl shadow-violet-900/40"
+                href="#contact"
+              >
+                Scale Your Brand
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </MagneticButton>
+
+              <MagneticButton
+                id="hero-cta-secondary"
+                variant="secondary"
+                href="#showcase"
+              >
+                View My Work
+              </MagneticButton>
+            </motion.div>
+
+            {/* Scroll indicator */}
+            <motion.div
+              custom={4}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={fadeUp}
+              className="mt-16 flex flex-col items-center gap-2"
+            >
+              <span className="text-white/20 text-[10px] tracking-[0.2em] uppercase">
+                Scroll
+              </span>
+              <motion.div
+                className="w-px h-10 bg-gradient-to-b from-violet-500/40 to-transparent"
+                animate={{ scaleY: [0, 1, 0], originY: "top" }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+          </div>
+
+          {/* ── RIGHT: Desktop / Facebook ad ── */}
+          <motion.div
+            className="hidden lg:flex justify-start pl-4"
+            initial={{ opacity: 0, x: 120 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1.0, delay: 0.5, ease: EASE }}
+          >
+            <motion.div
+              animate={{ y: [0, -14, -22, -8, 0], rotate: [0, -1, 0.8, -1.2, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: FLOAT_EASE, delay: -3 }}
+              style={{
+                width: 260,
+                filter:
+                  "drop-shadow(0 30px 60px rgba(249,115,22,0.3)) drop-shadow(0 60px 120px rgba(236,72,153,0.12))",
+              }}
+            >
+              <DesktopFrame>
+                <FacebookAdContent />
+              </DesktopFrame>
+            </motion.div>
+          </motion.div>
+
+        </div>
+
+        {/* Mobile: show devices stacked below text */}
+        <div className="lg:hidden mt-12 flex flex-col sm:flex-row items-center justify-center gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+          >
+            <motion.div
+              animate={{ y: [0, -18, -6, -20, 0], rotate: [0, 1, -0.5, 1.2, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: FLOAT_EASE }}
+            >
+              <IPhoneFrame scale={0.8}>
+                <InstagramAdContent />
+              </IPhoneFrame>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
+            className="w-full max-w-[280px]"
+          >
+            <motion.div
+              animate={{ y: [0, -14, -22, -8, 0], rotate: [0, -1, 0.8, -1.2, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: FLOAT_EASE, delay: -3 }}
+            >
+              <DesktopFrame>
+                <FacebookAdContent />
+              </DesktopFrame>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
