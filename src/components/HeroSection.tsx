@@ -24,7 +24,7 @@ const fadeUp: Variants = {
   }),
 };
 
-const FLOAT_EASE = "easeInOut" as const;
+
 
 export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -72,9 +72,7 @@ export default function HeroSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1.0, delay: 0.4, ease: EASE }}
           >
-            <motion.div
-              animate={{ y: [0, -18, -6, -20, 0], rotate: [0, 1, -0.5, 1.2, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: FLOAT_EASE }}
+            <div
               style={{
                 filter:
                   "drop-shadow(0 30px 60px rgba(124,58,237,0.4)) drop-shadow(0 60px 120px rgba(59,130,246,0.15))",
@@ -83,7 +81,7 @@ export default function HeroSection() {
               <IPhoneFrame scale={260 / 220}>
                 <InstagramAdContent />
               </IPhoneFrame>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* ── CENTER: Text content ── */}
@@ -194,9 +192,7 @@ export default function HeroSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 1.0, delay: 0.5, ease: EASE }}
           >
-            <motion.div
-              animate={{ y: [0, -14, -22, -8, 0], rotate: [0, -1, 0.8, -1.2, 0] }}
-              transition={{ duration: 9, repeat: Infinity, ease: FLOAT_EASE, delay: -3 }}
+            <div
               style={{
                 width: 260,
                 filter:
@@ -204,9 +200,9 @@ export default function HeroSection() {
               }}
             >
               <DesktopFrame>
-                <FacebookAdContent />
+                <FacebookAdContent compact />
               </DesktopFrame>
-            </motion.div>
+            </div>
           </motion.div>
 
         </div>
@@ -218,14 +214,11 @@ export default function HeroSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
           >
-            <motion.div
-              animate={{ y: [0, -18, -6, -20, 0], rotate: [0, 1, -0.5, 1.2, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: FLOAT_EASE }}
-            >
+            <div>
               <IPhoneFrame scale={0.8}>
                 <InstagramAdContent />
               </IPhoneFrame>
-            </motion.div>
+            </div>
           </motion.div>
 
           <motion.div
@@ -234,14 +227,11 @@ export default function HeroSection() {
             transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
             className="w-full max-w-[280px]"
           >
-            <motion.div
-              animate={{ y: [0, -14, -22, -8, 0], rotate: [0, -1, 0.8, -1.2, 0] }}
-              transition={{ duration: 9, repeat: Infinity, ease: FLOAT_EASE, delay: -3 }}
-            >
+            <div>
               <DesktopFrame>
-                <FacebookAdContent />
+                <FacebookAdContent compact />
               </DesktopFrame>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>

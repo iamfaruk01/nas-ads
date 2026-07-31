@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   IPhoneFrame,
@@ -14,14 +14,6 @@ const EASE = [0.21, 0.47, 0.32, 0.98] as [number, number, number, number];
 export default function AdShowcase() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const iPhoneY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const desktopY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
 
   return (
     <section
@@ -62,26 +54,19 @@ export default function AdShowcase() {
           </p>
         </motion.div>
 
-        {/* Devices grid */}
+        {/* Devices grid — no animation */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
 
           {/* Left — iPhone / Instagram */}
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
-            className="flex flex-col items-center gap-6"
-          >
+          <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-2 glass px-4 py-1.5 rounded-full">
               <div className="w-2 h-2 rounded-full bg-gradient-to-r from-orange-400 to-pink-500" />
               <span className="text-white/60 text-xs font-medium tracking-wide">Instagram Feed Ad</span>
             </div>
 
-            <motion.div className="animate-float-device-a" style={{ y: iPhoneY }}>
-              <IPhoneFrame>
-                <InstagramAdContent />
-              </IPhoneFrame>
-            </motion.div>
+            <IPhoneFrame>
+              <InstagramAdContent />
+            </IPhoneFrame>
 
             <div className="flex gap-3">
               {[
@@ -95,25 +80,20 @@ export default function AdShowcase() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Right — Desktop / Facebook */}
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
-            className="flex flex-col items-center gap-6"
-          >
+          <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-2 glass px-4 py-1.5 rounded-full">
               <div className="w-2 h-2 rounded-full bg-[#1877F2]" />
               <span className="text-white/60 text-xs font-medium tracking-wide">Facebook Feed Ad</span>
             </div>
 
-            <motion.div className="w-full animate-float-device-b" style={{ y: desktopY }}>
+            <div className="w-full">
               <DesktopFrame>
                 <FacebookAdContent />
               </DesktopFrame>
-            </motion.div>
+            </div>
 
             <div className="flex gap-3">
               {[
@@ -127,7 +107,8 @@ export default function AdShowcase() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
+
         </div>
       </div>
     </section>

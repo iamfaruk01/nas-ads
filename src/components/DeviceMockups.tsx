@@ -104,7 +104,7 @@ export function InstagramAdContent() {
 /* ============================================================
    FACEBOOK AD CONTENT
    ============================================================ */
-export function FacebookAdContent() {
+export function FacebookAdContent({ compact = false }: { compact?: boolean }) {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-sm" style={{ fontFamily: "system-ui, sans-serif" }}>
       {/* Post header */}
@@ -121,13 +121,15 @@ export function FacebookAdContent() {
         <MoreHorizontal className="w-5 h-5 text-gray-500" />
       </div>
 
-      {/* Copy */}
-      <div className="px-3 pb-2">
-        <p className="text-sm text-gray-800 leading-snug">
-          🔥 <strong>Stop guessing. Start scaling.</strong> Our data-driven Meta Ads strategy generated $2.4M in revenue last quarter.
-          <span className="text-[#1877F2]"> See More</span>
-        </p>
-      </div>
+      {/* Copy — hidden in compact mode */}
+      {!compact && (
+        <div className="px-3 pb-2">
+          <p className="text-sm text-gray-800 leading-snug">
+            🔥 <strong>Stop guessing. Start scaling.</strong> Our data-driven Meta Ads strategy generated $2.4M in revenue last quarter.
+            <span className="text-[#1877F2]"> See More</span>
+          </p>
+        </div>
+      )}
 
       {/* Ad image */}
       <div className="relative bg-gradient-to-br from-slate-900 via-violet-950 to-indigo-900 h-48 flex items-center justify-center overflow-hidden">
@@ -152,31 +154,34 @@ export function FacebookAdContent() {
         </button>
       </div>
 
-      {/* Reactions */}
-      <div className="px-3 py-2 border-t border-gray-100">
-        <div className="flex items-center justify-between text-gray-500 text-xs mb-2">
-          <div className="flex items-center gap-1">
-            <span>❤️👍😮</span>
-            <span>5,231</span>
+      {/* Reactions — hidden in compact mode */}
+      {!compact && (
+        <div className="px-3 py-2 border-t border-gray-100">
+          <div className="flex items-center justify-between text-gray-500 text-xs mb-2">
+            <div className="flex items-center gap-1">
+              <span>❤️👍😮</span>
+              <span>5,231</span>
+            </div>
+            <span>847 comments · 320 shares</span>
           </div>
-          <span>847 comments · 320 shares</span>
+          <div className="flex items-center justify-around border-t border-gray-100 pt-2 gap-1">
+            {[
+              { icon: ThumbsUp, label: "Like" },
+              { icon: MessageCircle, label: "Comment" },
+              { icon: Share2, label: "Share" },
+            ].map(({ icon: Icon, label }) => (
+              <button key={label} className="flex items-center gap-1.5 text-gray-500 text-xs font-semibold flex-1 justify-center py-1 rounded-md hover:bg-gray-100 transition-colors" type="button">
+                <Icon className="w-4 h-4" aria-hidden="true" />
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex items-center justify-around border-t border-gray-100 pt-2 gap-1">
-          {[
-            { icon: ThumbsUp, label: "Like" },
-            { icon: MessageCircle, label: "Comment" },
-            { icon: Share2, label: "Share" },
-          ].map(({ icon: Icon, label }) => (
-            <button key={label} className="flex items-center gap-1.5 text-gray-500 text-xs font-semibold flex-1 justify-center py-1 rounded-md hover:bg-gray-100 transition-colors" type="button">
-              <Icon className="w-4 h-4" aria-hidden="true" />
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
+
 
 /* ============================================================
    iPHONE FRAME
