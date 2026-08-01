@@ -73,11 +73,21 @@ export default function HeroSection() {
             transition={{ duration: 1.0, delay: 0.4, ease: EASE }}
           >
             <div
+              className="flex flex-col items-center"
               style={{
                 filter:
                   "drop-shadow(0 30px 60px rgba(124,58,237,0.4)) drop-shadow(0 60px 120px rgba(59,130,246,0.15))",
               }}
             >
+              <div className="flex items-center gap-1.5 mb-3 bg-violet-950/70 backdrop-blur-md border border-violet-500/30 px-3 py-1 rounded-full shadow-lg">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+                </span>
+                <span className="text-[10px] font-bold tracking-wider text-violet-200 uppercase">
+                  Interactive · Scroll Phone 📱
+                </span>
+              </div>
               <IPhoneFrame scale={260 / 220}>
                 <InstagramAdContent />
               </IPhoneFrame>
