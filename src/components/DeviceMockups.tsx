@@ -479,12 +479,13 @@ export function FacebookAdContent({ compact = false }: { compact?: boolean }) {
 /* ============================================================
    iPHONE FRAME
    ============================================================ */
-export function IPhoneFrame({ children, scale = 1 }: { children: React.ReactNode; scale?: number }) {
+export function IPhoneFrame({ children, scale = 260 / 220 }: { children: React.ReactNode; scale?: number }) {
+  const widthPx = 220 * scale;
   return (
     <div
-      className="relative mx-auto"
+      className="relative mx-auto max-w-full"
       style={{
-        width: 220 * scale,
+        width: widthPx,
         borderRadius: 36 * scale,
         padding: `${10 * scale}px ${8 * scale}px`,
         background: "linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 40%, #2d2d2d 100%)",
@@ -497,13 +498,20 @@ export function IPhoneFrame({ children, scale = 1 }: { children: React.ReactNode
       }}
     >
       {/* Side buttons */}
-      <div className="absolute -left-[3px] top-20 rounded-l-sm" style={{ width: 3, height: 28, background: "#333" }} />
-      <div className="absolute -left-[3px] top-32 rounded-l-sm" style={{ width: 3, height: 50, background: "#333" }} />
-      <div className="absolute -left-[3px] top-44 rounded-l-sm" style={{ width: 3, height: 50, background: "#333" }} />
-      <div className="absolute -right-[3px] top-28 rounded-r-sm" style={{ width: 3, height: 60, background: "#333" }} />
+      <div className="absolute -left-[3px] rounded-l-sm" style={{ top: 70 * scale, width: 3, height: 28 * scale, background: "#333" }} />
+      <div className="absolute -left-[3px] rounded-l-sm" style={{ top: 110 * scale, width: 3, height: 48 * scale, background: "#333" }} />
+      <div className="absolute -left-[3px] rounded-l-sm" style={{ top: 168 * scale, width: 3, height: 48 * scale, background: "#333" }} />
+      <div className="absolute -right-[3px] rounded-r-sm" style={{ top: 115 * scale, width: 3, height: 58 * scale, background: "#333" }} />
 
       {/* Screen */}
       <div style={{ borderRadius: 28 * scale, overflow: "hidden", background: "#fff", position: "relative" }}>
+        {/* Dynamic Island Pill Notch */}
+        <div
+          className="absolute top-[8px] left-1/2 -translate-x-1/2 z-30 bg-black rounded-full flex items-center justify-end px-1.5 shadow-md pointer-events-none"
+          style={{ width: 68 * scale, height: 14 * scale }}
+        >
+          <div className="w-2 h-2 rounded-full bg-[#161618] border border-white/10" />
+        </div>
         <div>
           {children}
         </div>

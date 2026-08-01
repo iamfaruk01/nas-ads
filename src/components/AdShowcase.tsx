@@ -64,7 +64,7 @@ export default function AdShowcase() {
               <span className="text-white/60 text-xs font-medium tracking-wide">Instagram Feed Ad</span>
             </div>
 
-            <IPhoneFrame>
+            <IPhoneFrame scale={260 / 220}>
               <InstagramAdContent />
             </IPhoneFrame>
 

@@ -218,22 +218,30 @@ export default function HeroSection() {
         </div>
 
         {/* Mobile: show devices stacked below text */}
-        <div className="lg:hidden mt-12 flex flex-col sm:flex-row items-center justify-center gap-8">
+        <div className="lg:hidden mt-12 flex flex-col items-center justify-center gap-10 w-full max-w-[320px] mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+            className="flex flex-col items-center w-full"
           >
-            <div>
-              <IPhoneFrame scale={0.8}>
-                <InstagramAdContent />
-              </IPhoneFrame>
+            <div className="flex items-center gap-1.5 mb-3 bg-violet-950/70 backdrop-blur-md border border-violet-500/30 px-3 py-1 rounded-full shadow-lg">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+              </span>
+              <span className="text-[10px] font-bold tracking-wider text-violet-200 uppercase">
+                Interactive · Scroll Phone 📱
+              </span>
             </div>
+            <IPhoneFrame scale={260 / 220}>
+              <InstagramAdContent />
+            </IPhoneFrame>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
             className="w-full max-w-[280px]"
           >
